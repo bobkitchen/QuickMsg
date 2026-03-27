@@ -1,4 +1,3 @@
-import AppIntents
 import Foundation
 import WidgetKit
 
@@ -34,8 +33,6 @@ final class SlotStore: @unchecked Sendable {
         if let data = try? JSONEncoder().encode(slots) {
             defaults.set(data, forKey: AppConstants.slotsKey)
         }
-        // Update Siri/Shortcuts with current slot configuration
-        QuickMsgShortcuts.updateAppShortcutParameters()
     }
 
     func updateSlot(at index: Int, _ transform: (inout MessageSlot) -> Void) {

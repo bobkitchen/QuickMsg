@@ -1,3 +1,4 @@
+import AppIntents
 import SwiftUI
 import WidgetKit
 
@@ -78,6 +79,7 @@ struct ContentView: View {
         store.updateSlot(at: index) { slot in
             slot = slots[index]
         }
+        QuickMsgShortcuts.updateAppShortcutParameters()
         WidgetCenter.shared.reloadTimelines(ofKind: AppConstants.widgetKind)
     }
 
