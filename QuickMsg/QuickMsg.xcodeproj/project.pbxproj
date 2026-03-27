@@ -28,6 +28,8 @@
 		B1000040 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000020 /* AppConstants.swift */; };
 		B1000041 /* MessageSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000006 /* MessageSlot.swift */; };
 		B1000042 /* SlotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000007 /* SlotStore.swift */; };
+		/* SendMessageIntent also compiled into main app (needed by QuickMsgShortcuts) */
+		B1000043 /* SendMessageIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000032 /* SendMessageIntent.swift */; };
 		/* Frameworks */
 		B1000050 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1000050 /* WidgetKit.framework */; };
 		B1000051 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1000051 /* SwiftUI.framework */; };
@@ -314,6 +316,7 @@
 				B1000008 /* ShortcutLauncher.swift in Sources */,
 				B1000009 /* AppConstants.swift in Sources */,
 				B100000B /* QuickMsgShortcuts.swift in Sources */,
+				B1000043 /* SendMessageIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
