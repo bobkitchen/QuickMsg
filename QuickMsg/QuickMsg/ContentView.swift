@@ -4,10 +4,12 @@ import WidgetKit
 
 enum ActiveSheet: Identifiable {
     case editor(Int)
+    case setupGuide(Int)
 
     var id: String {
         switch self {
         case .editor(let i): return "editor-\(i)"
+        case .setupGuide(let i): return "guide-\(i)"
         }
     }
 }
@@ -31,6 +33,7 @@ struct ContentView: View {
                             slot: slot,
                             index: index,
                             onEdit: { activeSheet = .editor(index) },
+                            onSetup: { activeSheet = .setupGuide(index) },
                             onTest: { testSlot(index) }
                         )
                     }
@@ -46,6 +49,8 @@ struct ContentView: View {
                         slotIndex: index,
                         onSave: { saveSlot(at: index) }
                     )
+                case .setupGuide(let index):
+                    SetupGuideView(slot: slots[index], slotIndex: index)
                 }
             }
         }
@@ -94,6 +99,7 @@ private struct SlotCardView: View {
     let slot: MessageSlot
     let index: Int
     let onEdit: () -> Void
+    let onSetup: () -> Void
     let onTest: () -> Void
 
     private var accentColor: Color {
@@ -133,6 +139,9 @@ private struct SlotCardView: View {
                 HStack {
                     Button("Edit", action: onEdit)
                     Spacer()
+                    Button("Setup Shortcut", action: onSetup)
+                        .tint(.orange)
+                    Spacer()
                     Button("Test", action: onTest)
                         .tint(.green)
                 }
@@ -152,19 +161,26 @@ private struct SlotCardView: View {
 
     @ViewBuilder
     private var statusBadge: some View {
-        if slot.isConfigured {
-            Text("Ready")
-                .font(.caption)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 2)
-                .background(.green.opacity(0.2))
-                .clipShape(Capsule())
-        } else {
+        if !slot.isConfigured {
             Text("Not Set Up")
                 .font(.caption)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 2)
                 .background(.secondary.opacity(0.2))
+                .clipShape(Capsule())
+        } else if slot.shortcutName.isEmpty {
+            Text("Needs Shortcut")
+                .font(.caption)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 2)
+                .background(.orange.opacity(0.2))
+                .clipShape(Capsule())
+        } else {
+            Text("Ready")
+                .font(.caption)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 2)
+                .background(.green.opacity(0.2))
                 .clipShape(Capsule())
         }
     }
