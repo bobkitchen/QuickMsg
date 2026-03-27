@@ -53,4 +53,11 @@ enum ShortcutLauncher {
             UIApplication.shared.open(url)
         }
     }
+
+    /// Open the Shortcuts app to create a new shortcut
+    static func openShortcutsToCreate() {
+        if let url = URL(string: "shortcuts://create-shortcut") {
+            UIApplication.shared.open(url)
+        }
+    }
 }

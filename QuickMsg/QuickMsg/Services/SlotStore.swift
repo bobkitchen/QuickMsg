@@ -26,7 +26,20 @@ final class SlotStore: @unchecked Sendable {
             saveSlots(padded)
             return padded
         }
-        return slots
+        // Migrate: sync shortcutName to label for existing slots that still
+        // have the old "QuickMsg_SlotN" naming convention.
+        var migrated = slots
+        var didMigrate = false
+        for i in migrated.indices {
+            if migrated[i].shortcutName.hasPrefix("QuickMsg_Slot") && migrated[i].isConfigured {
+                migrated[i].shortcutName = migrated[i].label
+                didMigrate = true
+            }
+        }
+        if didMigrate {
+            saveSlots(migrated)
+        }
+        return didMigrate ? migrated : slots
     }
 
     func saveSlots(_ slots: [MessageSlot]) {

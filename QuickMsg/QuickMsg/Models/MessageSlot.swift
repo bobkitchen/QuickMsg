@@ -39,7 +39,7 @@ struct MessageSlot: Codable, Identifiable {
         self.recipientName = recipientName
         self.recipientPhone = recipientPhone
         self.messageText = messageText
-        self.shortcutName = shortcutName ?? AppConstants.defaultShortcutName(for: slotIndex)
+        self.shortcutName = shortcutName ?? label ?? AppConstants.defaultLabels[slotIndex]
         self.isEnabled = isEnabled
         self.slotState = .idle
         self.stateTimestamp = nil

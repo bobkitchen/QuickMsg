@@ -81,6 +81,10 @@ struct ContentView: View {
     }
 
     private func saveSlot(at index: Int) {
+        // Sync shortcutName to the user-facing label so the Shortcuts app
+        // shortcut has the same name the user sees on the widget.
+        slots[index].shortcutName = slots[index].label
+
         store.updateSlot(at: index) { slot in
             slot = slots[index]
         }
@@ -139,7 +143,7 @@ private struct SlotCardView: View {
                 HStack {
                     Button("Edit", action: onEdit)
                     Spacer()
-                    Button("Setup Shortcut", action: onSetup)
+                    Button("Setup WhatsApp Shortcut", action: onSetup)
                         .tint(.orange)
                     Spacer()
                     Button("Test", action: onTest)
