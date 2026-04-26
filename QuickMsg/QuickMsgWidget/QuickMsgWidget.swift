@@ -1,35 +1,35 @@
 import WidgetKit
 import SwiftUI
 
-struct QuickMsgEntry: TimelineEntry {
+struct LangoEntry: TimelineEntry {
     let date: Date
     let slots: [MessageSlot]
 }
 
-struct QuickMsgTimelineProvider: TimelineProvider {
+struct LangoTimelineProvider: TimelineProvider {
     private let store = SlotStore()
 
-    func placeholder(in context: Context) -> QuickMsgEntry {
-        QuickMsgEntry(date: .now, slots: (0..<3).map { MessageSlot(slotIndex: $0) })
+    func placeholder(in context: Context) -> LangoEntry {
+        LangoEntry(date: .now, slots: (0..<LangoConstants.slotCount).map { MessageSlot(slotIndex: $0) })
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (QuickMsgEntry) -> Void) {
+    func getSnapshot(in context: Context, completion: @escaping (LangoEntry) -> Void) {
         store.resetExpiredStates()
         let slots = store.loadSlots()
-        completion(QuickMsgEntry(date: .now, slots: slots))
+        completion(LangoEntry(date: .now, slots: slots))
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<QuickMsgEntry>) -> Void) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<LangoEntry>) -> Void) {
         store.resetExpiredStates()
         let slots = store.loadSlots()
-        let entry = QuickMsgEntry(date: .now, slots: slots)
+        let entry = LangoEntry(date: .now, slots: slots)
 
-        // Schedule a refresh for when any feedback state should expire
-        var nextRefresh = Date().addingTimeInterval(60 * 15) // Default: 15 min
+        // Refresh when any feedback state should expire.
+        var nextRefresh = Date().addingTimeInterval(60 * 15)
         for slot in slots {
             if let ts = slot.stateTimestamp,
                (slot.slotState == .sent || slot.slotState == .failed || slot.slotState == .sending) {
-                let expiry = ts.addingTimeInterval(AppConstants.feedbackDisplayDuration)
+                let expiry = ts.addingTimeInterval(LangoConstants.feedbackDisplayDuration)
                 if expiry < nextRefresh {
                     nextRefresh = expiry
                 }
@@ -42,17 +42,26 @@ struct QuickMsgTimelineProvider: TimelineProvider {
 }
 
 @main
-struct QuickMsgWidgetBundle: Widget {
-    let kind = AppConstants.widgetKind
+struct LangoWidgetBundle: Widget {
+    let kind = LangoConstants.widgetKind
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: QuickMsgTimelineProvider()) { entry in
-            QuickMsgWidgetEntryView(entry: entry)
+        StaticConfiguration(kind: kind, provider: LangoTimelineProvider()) { entry in
+            LangoWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("QuickMsg")
-        .description("Send preset WhatsApp messages with one tap.")
-        .supportedFamilies([.systemSmall, .systemMedium, .accessoryCircular, .accessoryRectangular])
+        .configurationDisplayName("Lango")
+        .description("Send a preset WhatsApp message with one tap or one Siri phrase.")
+        // systemSmall is rendered on both Home Screen and CarPlay (StandBy-style).
+        // systemMedium is Home Screen only — CarPlay does not render it.
+        // Lock Screen accessory families are available for non-driving use only;
+        // iOS may prompt for unlock when tapped, regardless of authenticationPolicy.
+        .supportedFamilies([
+            .systemSmall,
+            .systemMedium,
+            .accessoryCircular,
+            .accessoryRectangular,
+        ])
         .contentMarginsDisabled()
     }
 }

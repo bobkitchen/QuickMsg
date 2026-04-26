@@ -4,12 +4,12 @@ import WidgetKit
 
 enum ActiveSheet: Identifiable {
     case editor(Int)
-    case setupGuide(Int)
+    case settings
 
     var id: String {
         switch self {
         case .editor(let i): return "editor-\(i)"
-        case .setupGuide(let i): return "guide-\(i)"
+        case .settings: return "settings"
         }
     }
 }
@@ -17,6 +17,7 @@ enum ActiveSheet: Identifiable {
 struct ContentView: View {
     @State private var slots: [MessageSlot] = []
     @State private var activeSheet: ActiveSheet?
+    @State private var lastSendError: String?
 
     private let store = SlotStore.shared
 
@@ -33,15 +34,31 @@ struct ContentView: View {
                             slot: slot,
                             index: index,
                             onEdit: { activeSheet = .editor(index) },
-                            onSetup: { activeSheet = .setupGuide(index) },
-                            onTest: { testSlot(index) }
+                            onTest: { Task { await testSlot(index) } }
                         )
                     }
                 }
+
+                if let lastSendError {
+                    Section {
+                        Label(lastSendError, systemImage: "exclamationmark.triangle.fill")
+                            .font(.footnote)
+                            .foregroundStyle(.red)
+                    }
+                }
             }
-            .navigationTitle("QuickMsg")
+            .navigationTitle("Lango")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        activeSheet = .settings
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                    }
+                }
+            }
             .onAppear { loadSlots() }
-            .sheet(item: $activeSheet) { sheet in
+            .sheet(item: $activeSheet, onDismiss: { loadSlots() }) { sheet in
                 switch sheet {
                 case .editor(let index):
                     SlotEditorView(
@@ -49,8 +66,8 @@ struct ContentView: View {
                         slotIndex: index,
                         onSave: { saveSlot(at: index) }
                     )
-                case .setupGuide(let index):
-                    SetupGuideView(slot: slots[index], slotIndex: index)
+                case .settings:
+                    SettingsView()
                 }
             }
         }
@@ -59,12 +76,24 @@ struct ContentView: View {
     @ViewBuilder
     private var statusBanner: some View {
         let configured = slots.filter(\.isConfigured).count
-        HStack {
-            Image(systemName: configured == slots.count ? "checkmark.circle.fill" : "info.circle.fill")
-                .foregroundStyle(configured == slots.count ? .green : .orange)
-            Text("\(configured)/\(slots.count) slots configured")
-                .font(.subheadline)
-            Spacer()
+        let workerReady = AppConfig.isConfigured
+
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Image(systemName: workerReady ? "checkmark.circle.fill" : "exclamationmark.circle.fill")
+                    .foregroundStyle(workerReady ? .green : .orange)
+                Text(workerReady ? "Worker configured" : "Worker not configured — open Settings")
+                    .font(.subheadline)
+                Spacer()
+            }
+            HStack {
+                Image(systemName: "square.grid.2x2.fill")
+                    .foregroundStyle(.secondary)
+                Text("\(configured)/\(slots.count) slots configured")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Spacer()
+            }
         }
         .padding(.vertical, 4)
     }
@@ -81,19 +110,34 @@ struct ContentView: View {
     }
 
     private func saveSlot(at index: Int) {
-        // Sync shortcutName to the user-facing label so the Shortcuts app
-        // shortcut has the same name the user sees on the widget.
-        slots[index].shortcutName = slots[index].label
-
         store.updateSlot(at: index) { slot in
             slot = slots[index]
         }
-        QuickMsgShortcuts.updateAppShortcutParameters()
-        WidgetCenter.shared.reloadTimelines(ofKind: AppConstants.widgetKind)
+        LangoShortcuts.updateAppShortcutParameters()
+        WidgetCenter.shared.reloadTimelines(ofKind: LangoConstants.widgetKind)
     }
 
-    private func testSlot(_ index: Int) {
-        ShortcutLauncher.runShortcut(for: index)
+    @MainActor
+    private func testSlot(_ index: Int) async {
+        let slot = slots[index]
+        guard slot.isConfigured else { return }
+        guard AppConfig.isConfigured else {
+            lastSendError = "Configure the Worker URL and secret in Settings first."
+            return
+        }
+
+        lastSendError = nil
+        store.setSlotState(index, state: .sending)
+        loadSlots()
+
+        do {
+            try await MessageService.send(messageKey: slot.messageKey)
+            store.setSlotState(index, state: .sent)
+        } catch {
+            store.setSlotState(index, state: .failed)
+            lastSendError = "\(error)"
+        }
+        loadSlots()
     }
 }
 
@@ -103,11 +147,10 @@ private struct SlotCardView: View {
     let slot: MessageSlot
     let index: Int
     let onEdit: () -> Void
-    let onSetup: () -> Void
     let onTest: () -> Void
 
     private var accentColor: Color {
-        let c = AppConstants.slotColors[index % AppConstants.slotColors.count]
+        let c = LangoConstants.slotColors[index % LangoConstants.slotColors.count]
         return Color(red: c.red, green: c.green, blue: c.blue)
     }
 
@@ -124,14 +167,13 @@ private struct SlotCardView: View {
             }
 
             if slot.isConfigured {
-                VStack(alignment: .leading, spacing: 4) {
-                    Label(slot.recipientName, systemImage: "person.fill")
-                        .font(.subheadline)
+                HStack(spacing: 6) {
+                    Text("messageKey:")
+                        .font(.caption)
                         .foregroundStyle(.secondary)
-                    Text(slot.messageText)
-                        .font(.subheadline)
+                    Text(slot.messageKey)
+                        .font(.caption.monospaced())
                         .foregroundStyle(.secondary)
-                        .lineLimit(2)
                 }
 
                 if let lastSent = slot.lastSentAt {
@@ -143,10 +185,7 @@ private struct SlotCardView: View {
                 HStack {
                     Button("Edit", action: onEdit)
                     Spacer()
-                    Button("Setup WhatsApp Shortcut", action: onSetup)
-                        .tint(.orange)
-                    Spacer()
-                    Button("Test", action: onTest)
+                    Button("Test send", action: onTest)
                         .tint(.green)
                 }
                 .buttonStyle(.bordered)
@@ -165,27 +204,28 @@ private struct SlotCardView: View {
 
     @ViewBuilder
     private var statusBadge: some View {
-        if !slot.isConfigured {
-            Text("Not Set Up")
-                .font(.caption)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 2)
-                .background(.secondary.opacity(0.2))
-                .clipShape(Capsule())
-        } else if slot.shortcutName.isEmpty {
-            Text("Needs Shortcut")
-                .font(.caption)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 2)
-                .background(.orange.opacity(0.2))
-                .clipShape(Capsule())
-        } else {
-            Text("Ready")
-                .font(.caption)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 2)
-                .background(.green.opacity(0.2))
-                .clipShape(Capsule())
+        switch slot.slotState {
+        case .idle:
+            if slot.isConfigured {
+                badge("Ready", color: .green)
+            } else {
+                badge("Not Set Up", color: .secondary)
+            }
+        case .sending:
+            badge("Sending…", color: .orange)
+        case .sent:
+            badge("Sent", color: .green)
+        case .failed:
+            badge("Failed", color: .red)
         }
+    }
+
+    private func badge(_ text: String, color: Color) -> some View {
+        Text(text)
+            .font(.caption)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 2)
+            .background(color.opacity(0.2))
+            .clipShape(Capsule())
     }
 }

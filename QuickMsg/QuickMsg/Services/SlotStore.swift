@@ -1,50 +1,41 @@
 import Foundation
 import WidgetKit
 
+/// Persists slot configuration in App Group UserDefaults so the main app and
+/// the widget extension share state. Drives the idle / sending / sent / failed
+/// state machine that the widget visualises.
 final class SlotStore: @unchecked Sendable {
     static let shared = SlotStore()
 
     private let defaults: UserDefaults
 
     init() {
-        self.defaults = UserDefaults(suiteName: AppConstants.appGroupID) ?? .standard
+        self.defaults = UserDefaults(suiteName: LangoConstants.appGroupID) ?? .standard
     }
 
     // MARK: - Slot CRUD
 
     func loadSlots() -> [MessageSlot] {
-        guard let data = defaults.data(forKey: AppConstants.slotsKey),
+        guard let data = defaults.data(forKey: LangoConstants.slotsKey),
               let slots = try? JSONDecoder().decode([MessageSlot].self, from: data) else {
             return createDefaultSlots()
         }
-        // Ensure we always have exactly slotCount slots
-        if slots.count < AppConstants.slotCount {
+        // Ensure we always have exactly slotCount slots — pad with defaults if
+        // the persisted array was shorter (older versions, etc.).
+        if slots.count < LangoConstants.slotCount {
             var padded = slots
-            for i in slots.count..<AppConstants.slotCount {
+            for i in slots.count..<LangoConstants.slotCount {
                 padded.append(MessageSlot(slotIndex: i))
             }
             saveSlots(padded)
             return padded
         }
-        // Migrate: sync shortcutName to label for existing slots that still
-        // have the old "QuickMsg_SlotN" naming convention.
-        var migrated = slots
-        var didMigrate = false
-        for i in migrated.indices {
-            if migrated[i].shortcutName.hasPrefix("QuickMsg_Slot") && migrated[i].isConfigured {
-                migrated[i].shortcutName = migrated[i].label
-                didMigrate = true
-            }
-        }
-        if didMigrate {
-            saveSlots(migrated)
-        }
-        return didMigrate ? migrated : slots
+        return slots
     }
 
     func saveSlots(_ slots: [MessageSlot]) {
         if let data = try? JSONEncoder().encode(slots) {
-            defaults.set(data, forKey: AppConstants.slotsKey)
+            defaults.set(data, forKey: LangoConstants.slotsKey)
         }
     }
 
@@ -65,7 +56,7 @@ final class SlotStore: @unchecked Sendable {
                 slot.lastSentAt = Date()
             }
         }
-        WidgetCenter.shared.reloadTimelines(ofKind: AppConstants.widgetKind)
+        WidgetCenter.shared.reloadTimelines(ofKind: LangoConstants.widgetKind)
     }
 
     func resetExpiredStates() {
@@ -75,7 +66,7 @@ final class SlotStore: @unchecked Sendable {
         for i in slots.indices {
             if let timestamp = slots[i].stateTimestamp,
                (slots[i].slotState == .sent || slots[i].slotState == .failed),
-               now.timeIntervalSince(timestamp) > AppConstants.feedbackDisplayDuration {
+               now.timeIntervalSince(timestamp) > LangoConstants.feedbackDisplayDuration {
                 slots[i].slotState = .idle
                 slots[i].stateTimestamp = nil
                 changed = true
@@ -86,14 +77,16 @@ final class SlotStore: @unchecked Sendable {
         }
     }
 
+    /// Returns false when a slot is unconfigured / disabled, or when it is
+    /// already in flight within the debounce window. Used by the widget tap
+    /// handler to avoid double-fires from accidental repeat taps.
     func canSend(slotIndex: Int) -> Bool {
         let slots = loadSlots()
         guard slotIndex >= 0 && slotIndex < slots.count else { return false }
         let slot = slots[slotIndex]
         guard slot.isConfigured && slot.isEnabled else { return false }
-        // Debounce check
         if let timestamp = slot.stateTimestamp, slot.slotState == .sending {
-            if Date().timeIntervalSince(timestamp) < AppConstants.debounceInterval {
+            if Date().timeIntervalSince(timestamp) < LangoConstants.debounceInterval {
                 return false
             }
         }
@@ -103,7 +96,7 @@ final class SlotStore: @unchecked Sendable {
     // MARK: - Private
 
     private func createDefaultSlots() -> [MessageSlot] {
-        let slots = (0..<AppConstants.slotCount).map { MessageSlot(slotIndex: $0) }
+        let slots = (0..<LangoConstants.slotCount).map { MessageSlot(slotIndex: $0) }
         saveSlots(slots)
         return slots
     }

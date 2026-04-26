@@ -5,14 +5,13 @@ struct SlotEditorView: View {
     let slotIndex: Int
     let onSave: () -> Void
     @Environment(\.dismiss) private var dismiss
-    @State private var showingContactPicker = false
 
     private let commonIcons = [
+        "house.and.flag.fill", "car.fill", "checkmark.seal.fill",
         "paperplane.fill", "bubble.left.fill", "location.fill",
-        "house.fill", "building.2.fill", "car.fill",
+        "house.fill", "building.2.fill", "key.fill",
         "clock.fill", "heart.fill", "star.fill",
         "bell.fill", "hand.wave.fill", "figure.walk",
-        "cup.and.saucer.fill", "fork.knife", "bed.double.fill",
     ]
 
     var body: some View {
@@ -21,40 +20,30 @@ struct SlotEditorView: View {
                 Section("Button Appearance") {
                     TextField("Label", text: $slot.label)
                         .textInputAutocapitalization(.words)
-
                     iconPicker
                 }
 
-                Section("Recipient") {
-                    Button(action: { showingContactPicker = true }) {
-                        HStack {
-                            Label("Pick Contact", systemImage: "person.crop.circle.fill")
-                            Spacer()
-                            if !slot.recipientName.isEmpty {
-                                Text(slot.recipientName)
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-                    }
-
-                    if !slot.recipientPhone.isEmpty {
-                        HStack {
-                            Text("Phone")
-                                .foregroundStyle(.secondary)
-                            Spacer()
-                            Text(slot.recipientPhone)
-                                .font(.footnote.monospaced())
-                        }
-                    }
-                }
-
-                Section("Message") {
-                    TextEditor(text: $slot.messageText)
-                        .frame(minHeight: 80)
+                Section {
+                    TextField("messageKey", text: $slot.messageKey)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled(true)
+                        .font(.system(.body, design: .monospaced))
+                } header: {
+                    Text("Message Key")
+                } footer: {
+                    Text("Must match a `ROUTE_<key>` env var on the Lango Worker. The Worker resolves this key to a Meta template and recipient phone number — neither of which lives on this device.")
                 }
 
                 Section {
                     Toggle("Enabled", isOn: $slot.isEnabled)
+                }
+
+                if slotIndex == 0 {
+                    Section {
+                        Label("Slot 1 is the canonical gate-open slot. The Siri phrase \"Hey Siri, open the gate\" is wired to this slot's position.", systemImage: "info.circle")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
             .navigationTitle("Slot \(slotIndex + 1)")
@@ -70,12 +59,6 @@ struct SlotEditorView: View {
                     }
                     .disabled(!slot.isConfigured)
                 }
-            }
-            .sheet(isPresented: $showingContactPicker) {
-                ContactPickerView(
-                    recipientName: $slot.recipientName,
-                    recipientPhone: $slot.recipientPhone
-                )
             }
         }
     }
@@ -109,7 +92,7 @@ struct SlotEditorView: View {
     }
 
     private var accentColor: Color {
-        let c = AppConstants.slotColors[slotIndex % AppConstants.slotColors.count]
+        let c = LangoConstants.slotColors[slotIndex % LangoConstants.slotColors.count]
         return Color(red: c.red, green: c.green, blue: c.blue)
     }
 }

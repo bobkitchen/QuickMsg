@@ -4,7 +4,11 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.bobkitchen.quickmsg</string>
+		<string>group.com.bobkitchen.lango</string>
+	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)com.bobkitchen.lango.shared</string>
 	</array>
 </dict>
 </plist>

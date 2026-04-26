@@ -2,13 +2,16 @@ import SwiftUI
 import WidgetKit
 import AppIntents
 
-struct QuickMsgWidgetEntryView: View {
+struct LangoWidgetEntryView: View {
     @Environment(\.widgetFamily) var family
-    let entry: QuickMsgEntry
+    let entry: LangoEntry
 
     var body: some View {
         switch family {
         case .systemSmall:
+            // systemSmall renders on both Home Screen and CarPlay. On CarPlay
+            // the widget background is stripped (StandBy style); the layout
+            // below is high-contrast and legible without a background.
             SmallWidgetView(slots: entry.slots)
         case .systemMedium:
             MediumWidgetView(slots: entry.slots)
@@ -22,12 +25,9 @@ struct QuickMsgWidgetEntryView: View {
     }
 }
 
-// MARK: - System Small (also used on CarPlay)
-// On CarPlay, systemSmall is the only supported family.
-// Layout uses large tap targets and system fonts for car-screen legibility.
+// MARK: - System Small (Home Screen + CarPlay)
 
 private struct SmallWidgetView: View {
-    @Environment(\.widgetContentMargins) var margins
     let slots: [MessageSlot]
 
     var body: some View {
@@ -39,7 +39,7 @@ private struct SmallWidgetView: View {
     }
 }
 
-// MARK: - System Medium (iPhone only — more room for labels)
+// MARK: - System Medium (Home Screen only — not rendered on CarPlay)
 
 private struct MediumWidgetView: View {
     let slots: [MessageSlot]
@@ -62,7 +62,7 @@ private struct SlotButton: View {
     let compact: Bool
 
     private var accentColor: Color {
-        let c = AppConstants.slotColors[index % AppConstants.slotColors.count]
+        let c = LangoConstants.slotColors[index % LangoConstants.slotColors.count]
         return Color(red: c.red, green: c.green, blue: c.blue)
     }
 
@@ -78,16 +78,17 @@ private struct SlotButton: View {
         .disabled(!slot.isConfigured || slot.slotState == .sending)
     }
 
-    // Compact: stacked icon + short label (systemSmall / CarPlay)
-    // Uses large tap targets — entire row is tappable
+    // Compact: row with state icon + label. Used at systemSmall (Home + CarPlay).
+    // No decorative background colour — CarPlay strips backgrounds, so contrast
+    // comes from the icon and bold label.
     private var compactLayout: some View {
         HStack(spacing: 8) {
             stateIcon
-                .font(.system(size: 20, weight: .semibold))
-                .frame(width: 28, height: 28)
+                .font(.system(size: 22, weight: .bold))
+                .frame(width: 30, height: 30)
 
             Text(slot.label)
-                .font(.system(.subheadline, weight: .semibold))
+                .font(.system(.subheadline, weight: .bold))
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
 
@@ -100,24 +101,17 @@ private struct SlotButton: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 
-    // Wide: icon + label + recipient name (systemMedium)
+    // Wide: stacked icon + label. Home Screen only.
     private var wideLayout: some View {
         VStack(spacing: 4) {
             stateIcon
-                .font(.system(size: 24, weight: .semibold))
-                .frame(width: 32, height: 32)
+                .font(.system(size: 26, weight: .bold))
+                .frame(width: 36, height: 36)
 
             Text(slot.label)
                 .font(.system(.caption, weight: .semibold))
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
-
-            if !slot.recipientName.isEmpty {
-                Text(slot.recipientName)
-                    .font(.system(.caption2))
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(8)
@@ -158,7 +152,7 @@ private struct SlotButton: View {
     }
 }
 
-// MARK: - Accessory Circular (Lock Screen — icon only)
+// MARK: - Accessory Circular (Lock Screen — non-driving surface)
 
 private struct AccessoryCircularView: View {
     let slot: MessageSlot
@@ -176,7 +170,7 @@ private struct AccessoryCircularView: View {
     }
 }
 
-// MARK: - Accessory Rectangular (Lock Screen — icon + label)
+// MARK: - Accessory Rectangular (Lock Screen — non-driving surface)
 
 private struct AccessoryRectangularView: View {
     let slot: MessageSlot
@@ -187,16 +181,10 @@ private struct AccessoryRectangularView: View {
                 Image(systemName: slot.isConfigured ? slot.icon : "questionmark")
                     .font(.system(size: 16, weight: .semibold))
 
-                VStack(alignment: .leading, spacing: 1) {
-                    Text(slot.label)
-                        .font(.system(.headline))
-                        .lineLimit(1)
-                    if !slot.recipientName.isEmpty {
-                        Text(slot.recipientName)
-                            .font(.system(.caption))
-                            .lineLimit(1)
-                    }
-                }
+                Text(slot.label)
+                    .font(.system(.headline))
+                    .lineLimit(1)
+
                 Spacer()
             }
         }

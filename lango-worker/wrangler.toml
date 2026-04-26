@@ -1,0 +1,26 @@
+name = "lango-worker"
+main = "src/index.ts"
+compatibility_date = "2026-01-01"
+
+[vars]
+# Fill these in via the Cloudflare dashboard or `wrangler deploy` after editing.
+# Phone numbers: international format, no + or spaces (e.g. "2547XXXXXXXX").
+META_PHONE_NUMBER_ID = ""
+GUARD_NUMBER = ""
+ANNA_NUMBER = ""
+BOB_NUMBER = ""
+
+# Routes: each ROUTE_<key> is "<template_name>:<RECIPIENT_VAR>".
+# Adding a new button = add a new ROUTE_<key> line, redeploy. No iOS rebuild.
+ROUTE_gate_open = "gate_open:GUARD_NUMBER"
+ROUTE_eta_to_anna = "eta_arriving:ANNA_NUMBER"
+ROUTE_eta_to_bob = "eta_arriving:BOB_NUMBER"
+ROUTE_arrived_anna = "arrived:ANNA_NUMBER"
+ROUTE_arrived_bob = "arrived:BOB_NUMBER"
+
+# Secrets — set via:
+#   wrangler secret put LANGO_SECRET
+#   wrangler secret put META_TOKEN
+#
+# Until META_TOKEN is set, the Worker returns { ok: true, mocked: true } so
+# the iOS app can be tested end-to-end before Meta credentials are ready.
