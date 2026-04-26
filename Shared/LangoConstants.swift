@@ -2,9 +2,6 @@ import Foundation
 
 /// Lango shared constants, accessed by the main app and the widget extension
 /// via the App Group container.
-///
-/// Note: file is named AppConstants.swift for Xcode-project continuity from
-/// the QuickMsg lineage. The Swift symbol is `LangoConstants`.
 enum LangoConstants {
     static let appGroupID = "group.com.bobkitchen.lango"
     static let keychainAccessGroup = "com.bobkitchen.lango.shared"

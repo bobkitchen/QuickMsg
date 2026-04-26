@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "T1000001"
-               BuildableName = "QuickMsg.app"
-               BlueprintName = "QuickMsg"
-               ReferencedContainer = "container:QuickMsg.xcodeproj">
+               BuildableName = "Lango.app"
+               BlueprintName = "Lango"
+               ReferencedContainer = "container:Lango.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "T1000001"
-            BuildableName = "QuickMsg.app"
-            BlueprintName = "QuickMsg"
-            ReferencedContainer = "container:QuickMsg.xcodeproj">
+            BuildableName = "Lango.app"
+            BlueprintName = "Lango"
+            ReferencedContainer = "container:Lango.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "T1000001"
-            BuildableName = "QuickMsg.app"
-            BlueprintName = "QuickMsg"
-            ReferencedContainer = "container:QuickMsg.xcodeproj">
+            BuildableName = "Lango.app"
+            BlueprintName = "Lango"
+            ReferencedContainer = "container:Lango.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

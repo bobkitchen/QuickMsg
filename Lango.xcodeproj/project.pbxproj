@@ -8,37 +8,37 @@
 
 /* Begin PBXBuildFile section */
 		/* Main App Sources */
-		B1000001 /* QuickMsgApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001 /* QuickMsgApp.swift */; };
+		B1000001 /*/* LangoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000001 /*/* LangoApp.swift */; };
 		B1000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000002 /* ContentView.swift */; };
 		B1000003 /* SlotEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000003 /* SlotEditorView.swift */; };
 		B1000006 /* MessageSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000006 /* MessageSlot.swift */; };
 		B1000007 /* SlotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000007 /* SlotStore.swift */; };
-		B1000009 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000020 /* AppConstants.swift */; };
-		B100000B /* QuickMsgShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000B /* QuickMsgShortcuts.swift */; };
+		B1000009 /*/* LangoConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000020 /*/* LangoConstants.swift */; };
+		B100000B /*/* LangoShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F100000B /*/* LangoShortcuts.swift */; };
 		B1000080 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000080 /* SettingsView.swift */; };
 		B1000081 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000081 /* KeychainService.swift */; };
 		B1000082 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000082 /* AppConfig.swift */; };
 		B1000083 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000083 /* MessageService.swift */; };
 		B100000A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1000011 /* Assets.xcassets */; };
 		/* Widget Extension Sources */
-		B1000030 /* QuickMsgWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000030 /* QuickMsgWidget.swift */; };
-		B1000031 /* QuickMsgWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000031 /* QuickMsgWidgetEntryView.swift */; };
+		B1000030 /*/* LangoWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000030 /*/* LangoWidget.swift */; };
+		B1000031 /*/* LangoWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000031 /*/* LangoWidgetEntryView.swift */; };
 		B1000032 /* SendMessageIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000032 /* SendMessageIntent.swift */; };
 		B1000033 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1000035 /* Assets.xcassets */; };
 		/* Shared files compiled into Widget target too */
-		B1000040 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000020 /* AppConstants.swift */; };
+		B1000040 /*/* LangoConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000020 /*/* LangoConstants.swift */; };
 		B1000041 /* MessageSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000006 /* MessageSlot.swift */; };
 		B1000042 /* SlotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000007 /* SlotStore.swift */; };
 		B1000091 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000081 /* KeychainService.swift */; };
 		B1000092 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000082 /* AppConfig.swift */; };
 		B1000093 /* MessageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000083 /* MessageService.swift */; };
-		/* SendMessageIntent also compiled into main app (needed by QuickMsgShortcuts) */
+		/* SendMessageIntent also compiled into main app (needed by LangoShortcuts) */
 		B1000043 /* SendMessageIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000032 /* SendMessageIntent.swift */; };
 		/* Frameworks */
 		B1000050 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1000050 /* WidgetKit.framework */; };
 		B1000051 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1000051 /* SwiftUI.framework */; };
 		/* Embed Extension */
-		B1000060 /* QuickMsgWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = P1000002 /* QuickMsgWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B1000060 /* LangoWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = P1000002 /* LangoWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +47,7 @@
 			containerPortal = R1000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = T1000002;
-			remoteInfo = QuickMsgWidgetExtension;
+			remoteInfo = LangoWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -58,7 +58,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				B1000060 /* QuickMsgWidgetExtension.appex in Embed Foundation Extensions */,
+				B1000060 /* LangoWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,34 +67,34 @@
 
 /* Begin PBXFileReference section */
 		/* Main App Swift Files */
-		F1000001 /* QuickMsgApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickMsgApp.swift; sourceTree = "<group>"; };
+		F1000001 /*/* LangoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangoApp.swift; sourceTree = "<group>"; };
 		F1000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F1000003 /* SlotEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotEditorView.swift; sourceTree = "<group>"; };
 		F1000006 /* MessageSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSlot.swift; sourceTree = "<group>"; };
 		F1000007 /* SlotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotStore.swift; sourceTree = "<group>"; };
-		F100000B /* QuickMsgShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickMsgShortcuts.swift; sourceTree = "<group>"; };
+		F100000B /*/* LangoShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangoShortcuts.swift; sourceTree = "<group>"; };
 		F1000080 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F1000081 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		F1000082 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		F1000083 /* MessageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageService.swift; sourceTree = "<group>"; };
 		F1000009 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F100000A /* QuickMsg.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickMsg.entitlements; sourceTree = "<group>"; };
+		F100000A /*/* Lango.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Lango.entitlements; sourceTree = "<group>"; };
 		F1000011 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		/* Shared Files */
-		F1000020 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		F1000020 /*/* LangoConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangoConstants.swift; sourceTree = "<group>"; };
 		/* Widget Swift Files */
-		F1000030 /* QuickMsgWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickMsgWidget.swift; sourceTree = "<group>"; };
-		F1000031 /* QuickMsgWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickMsgWidgetEntryView.swift; sourceTree = "<group>"; };
+		F1000030 /*/* LangoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangoWidget.swift; sourceTree = "<group>"; };
+		F1000031 /*/* LangoWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangoWidgetEntryView.swift; sourceTree = "<group>"; };
 		F1000032 /* SendMessageIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageIntent.swift; sourceTree = "<group>"; };
 		F1000033 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F1000034 /* QuickMsgWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickMsgWidget.entitlements; sourceTree = "<group>"; };
+		F1000034 /*/* LangoWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LangoWidget.entitlements; sourceTree = "<group>"; };
 		F1000035 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		/* Frameworks */
 		F1000050 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		F1000051 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		/* Products */
-		P1000001 /* QuickMsg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickMsg.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		P1000002 /* QuickMsgWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = QuickMsgWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		P1000001 /*/* Lango.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lango.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		P1000002 /* LangoWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LangoWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,18 +120,18 @@
 		G1000001 /* mainGroup */ = {
 			isa = PBXGroup;
 			children = (
-				G1000002 /* QuickMsg */,
-				G1000003 /* QuickMsgWidget */,
+				G1000002 /*/* Lango */,
+				G1000003 /*/* LangoWidget */,
 				G1000004 /* Shared */,
 				G1000005 /* Frameworks */,
 				G1000006 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		G1000002 /* QuickMsg */ = {
+		G1000002 /*/* Lango */ = {
 			isa = PBXGroup;
 			children = (
-				F1000001 /* QuickMsgApp.swift */,
+				F1000001 /*/* LangoApp.swift */,
 				F1000002 /* ContentView.swift */,
 				F1000003 /* SlotEditorView.swift */,
 				F1000080 /* SettingsView.swift */,
@@ -139,37 +139,37 @@
 				G1000008 /* Services */,
 				G1000009 /* Intents */,
 				F1000009 /* Info.plist */,
-				F100000A /* QuickMsg.entitlements */,
+				F100000A /*/* Lango.entitlements */,
 				F1000011 /* Assets.xcassets */,
 			);
-			path = QuickMsg;
+			path = Lango;
 			sourceTree = "<group>";
 		};
 		G1000009 /* Intents */ = {
 			isa = PBXGroup;
 			children = (
-				F100000B /* QuickMsgShortcuts.swift */,
+				F100000B /*/* LangoShortcuts.swift */,
 			);
 			path = Intents;
 			sourceTree = "<group>";
 		};
-		G1000003 /* QuickMsgWidget */ = {
+		G1000003 /*/* LangoWidget */ = {
 			isa = PBXGroup;
 			children = (
-				F1000030 /* QuickMsgWidget.swift */,
-				F1000031 /* QuickMsgWidgetEntryView.swift */,
+				F1000030 /*/* LangoWidget.swift */,
+				F1000031 /*/* LangoWidgetEntryView.swift */,
 				F1000032 /* SendMessageIntent.swift */,
 				F1000033 /* Info.plist */,
-				F1000034 /* QuickMsgWidget.entitlements */,
+				F1000034 /*/* LangoWidget.entitlements */,
 				F1000035 /* Assets.xcassets */,
 			);
-			path = QuickMsgWidget;
+			path = LangoWidget;
 			sourceTree = "<group>";
 		};
 		G1000004 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				F1000020 /* AppConstants.swift */,
+				F1000020 /*/* LangoConstants.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -186,8 +186,8 @@
 		G1000006 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				P1000001 /* QuickMsg.app */,
-				P1000002 /* QuickMsgWidgetExtension.appex */,
+				P1000001 /*/* Lango.app */,
+				P1000002 /* LangoWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -214,9 +214,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		T1000001 /* QuickMsg */ = {
+		T1000001 /*/* Lango */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CL000001 /* Build configuration list for PBXNativeTarget "QuickMsg" */;
+			buildConfigurationList = CL000001 /* Build configuration list for PBXNativeTarget "Lango" */;
 			buildPhases = (
 				SR000001 /* Sources */,
 				FW000001 /* Frameworks */,
@@ -228,14 +228,14 @@
 			dependencies = (
 				D1000001 /* PBXTargetDependency */,
 			);
-			name = QuickMsg;
-			productName = QuickMsg;
-			productReference = P1000001 /* QuickMsg.app */;
+			name = Lango;
+			productName = Lango;
+			productReference = P1000001 /*/* Lango.app */;
 			productType = "com.apple.product-type.application";
 		};
-		T1000002 /* QuickMsgWidgetExtension */ = {
+		T1000002 /* LangoWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CL000002 /* Build configuration list for PBXNativeTarget "QuickMsgWidgetExtension" */;
+			buildConfigurationList = CL000002 /* Build configuration list for PBXNativeTarget "LangoWidgetExtension" */;
 			buildPhases = (
 				SR000002 /* Sources */,
 				FW000002 /* Frameworks */,
@@ -245,9 +245,9 @@
 			);
 			dependencies = (
 			);
-			name = QuickMsgWidgetExtension;
-			productName = QuickMsgWidgetExtension;
-			productReference = P1000002 /* QuickMsgWidgetExtension.appex */;
+			name = LangoWidgetExtension;
+			productName = LangoWidgetExtension;
+			productReference = P1000002 /* LangoWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -268,7 +268,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CL000003 /* Build configuration list for PBXProject "QuickMsg" */;
+			buildConfigurationList = CL000003 /* Build configuration list for PBXProject "Lango" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -282,8 +282,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				T1000001 /* QuickMsg */,
-				T1000002 /* QuickMsgWidgetExtension */,
+				T1000001 /*/* Lango */,
+				T1000002 /* LangoWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -312,7 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1000001 /* QuickMsgApp.swift in Sources */,
+				B1000001 /*/* LangoApp.swift in Sources */,
 				B1000002 /* ContentView.swift in Sources */,
 				B1000003 /* SlotEditorView.swift in Sources */,
 				B1000080 /* SettingsView.swift in Sources */,
@@ -321,8 +321,8 @@
 				B1000081 /* KeychainService.swift in Sources */,
 				B1000082 /* AppConfig.swift in Sources */,
 				B1000083 /* MessageService.swift in Sources */,
-				B1000009 /* AppConstants.swift in Sources */,
-				B100000B /* QuickMsgShortcuts.swift in Sources */,
+				B1000009 /*/* LangoConstants.swift in Sources */,
+				B100000B /*/* LangoShortcuts.swift in Sources */,
 				B1000043 /* SendMessageIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,10 +331,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1000030 /* QuickMsgWidget.swift in Sources */,
-				B1000031 /* QuickMsgWidgetEntryView.swift in Sources */,
+				B1000030 /*/* LangoWidget.swift in Sources */,
+				B1000031 /*/* LangoWidgetEntryView.swift in Sources */,
 				B1000032 /* SendMessageIntent.swift in Sources */,
-				B1000040 /* AppConstants.swift in Sources */,
+				B1000040 /*/* LangoConstants.swift in Sources */,
 				B1000041 /* MessageSlot.swift in Sources */,
 				B1000042 /* SlotStore.swift in Sources */,
 				B1000091 /* KeychainService.swift in Sources */,
@@ -348,7 +348,7 @@
 /* Begin PBXTargetDependency section */
 		D1000001 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = T1000002 /* QuickMsgWidgetExtension */;
+			target = T1000002 /* LangoWidgetExtension */;
 			targetProxy = C1000001 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -361,12 +361,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = QuickMsg/QuickMsg.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Lango/Lango.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZW6EQ2JWKC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QuickMsg/Info.plist;
+				INFOPLIST_FILE = Lango/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lango;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -394,12 +394,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = QuickMsg/QuickMsg.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Lango/Lango.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZW6EQ2JWKC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QuickMsg/Info.plist;
+				INFOPLIST_FILE = Lango/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Lango;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -424,12 +424,12 @@
 		BC000003 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = QuickMsgWidget/QuickMsgWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = LangoWidget/LangoWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZW6EQ2JWKC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QuickMsgWidget/Info.plist;
+				INFOPLIST_FILE = LangoWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LangoWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
@@ -452,12 +452,12 @@
 		BC000004 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = QuickMsgWidget/QuickMsgWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = LangoWidget/LangoWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZW6EQ2JWKC;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = QuickMsgWidget/Info.plist;
+				INFOPLIST_FILE = LangoWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LangoWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
@@ -602,7 +602,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CL000001 /* Build configuration list for PBXNativeTarget "QuickMsg" */ = {
+		CL000001 /* Build configuration list for PBXNativeTarget "Lango" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC000001 /* Debug */,
@@ -611,7 +611,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CL000002 /* Build configuration list for PBXNativeTarget "QuickMsgWidgetExtension" */ = {
+		CL000002 /* Build configuration list for PBXNativeTarget "LangoWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC000003 /* Debug */,
@@ -620,7 +620,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CL000003 /* Build configuration list for PBXProject "QuickMsg" */ = {
+		CL000003 /* Build configuration list for PBXProject "Lango" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC000005 /* Debug */,
